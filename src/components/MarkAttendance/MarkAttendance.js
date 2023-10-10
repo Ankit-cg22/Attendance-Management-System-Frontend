@@ -4,13 +4,12 @@ import CourseList from '../CourseList/CourseList';
 export default function MarkAttendance() {
     const navigate = useNavigate();
     const arr=[{text:"Maths" , id : "1"} , {text : "English" , id:"2"} , {text : "Science" , id:"3"} , {text : "Social Studies" , id:"4"},]
-    const onButtonClick = (item) => {
-        console.log(item);
-        navigate(`/admin/markAttendance/course/${item.courseId}`)
+    const onButtonClick = (arritem) => {
+        console.log(arritem);
+        navigate(`/admin/markAttendance/course/${arritem.courseId}/${arritem.courseTitle}`)
     }
   return (
     <div>
-
         <CourseList arr={arr} buttonText="Mark Attendance" onButtonClick={onButtonClick}/>
     </div>
   )

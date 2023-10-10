@@ -6,7 +6,7 @@ export default function EnrollStudent() {
     const navigate = useNavigate();
     const onButtonClick = (item) => {
         console.log(item);
-        navigate(`/admin/enrollStudent/course/${item.courseId}`)
+        navigate(`/admin/enrollStudent/course/${item.courseId}/${item.courseTitle}`)
     }
   return (
     <div>

@@ -52,7 +52,7 @@ function App() {
                 <Sidebar list={adminSidebarOptions} ChildComponent={MarkAttendance}/>
             }
             />
-            <Route  path="/admin/markAttendance/course/:courseId" element={
+            <Route  path="/admin/markAttendance/course/:courseId/:courseTitle" element={
                 <Sidebar list={adminSidebarOptions} ChildComponent={StudentAttendance}/>
             }/>
             <Route  path="/admin/addAdmin" element={
@@ -64,13 +64,13 @@ function App() {
             <Route  path="/admin/enroll" element={
                 <Sidebar list={adminSidebarOptions} ChildComponent={EnrollStudent}/>
             }/>
-            <Route  path="/admin/enrollStudent/course/:courseId" element={
+            <Route  path="/admin/enrollStudent/course/:courseId/:courseTitle" element={
                 <Sidebar list={adminSidebarOptions} ChildComponent={StudentEnrollment}/>
             }/>
             <Route  path="/admin/evict" element={
                 <Sidebar list={adminSidebarOptions} ChildComponent={EvictStudent}/>
             }/>
-            <Route  path="/admin/evictStudent/course/:courseId" element={
+            <Route  path="/admin/evictStudent/course/:courseId/:courseTitle" element={
                 <Sidebar list={adminSidebarOptions} ChildComponent={StudentEviction}/>
             }/>
             {/* <Route exact path="" Component={}/> */}

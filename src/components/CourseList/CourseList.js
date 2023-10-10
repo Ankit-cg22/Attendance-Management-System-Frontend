@@ -7,10 +7,12 @@ import { BACKEND_URL } from '../../Utils/Costansts'
 
 export default function CourseList({buttonText, onButtonClick}) {
   const [data , setData] = useState([])
+  
   useEffect(()=>{
     axios.get(`${BACKEND_URL}/api/course/allCourses`)
     .then(res => {
        setData(res.data.data)
+
     })
     .catch(err=>{
       console.log(err)
