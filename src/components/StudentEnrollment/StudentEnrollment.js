@@ -22,21 +22,24 @@ export default function StudentEnrollment() {
         })
       },[])
     
-    const onButtonClick = (arrItem) => {
+    const onButtonClick = (arrItem , setLoading) => {
         const requestBody = {
           studentId : Number(arrItem.studentId) , 
           courseId : Number(courseId) , 
           token : contextData.token
         } 
+        setLoading(true)
         axios.post(`${BACKEND_URL}/api/enrollment/enrollStudent` ,requestBody)
         .then(res=>{
           console.log(res)
           alert("Student successfully enrolled.")
           const newData = data.filter(item => item.studentId !== arrItem.studentId)
           setData(newData)
+          setLoading(false)
         })
         .catch(err=>{
           console.log(err)
+          setLoading(false)
         })
     }
     const StudentComponent = ({arrItem}) => {

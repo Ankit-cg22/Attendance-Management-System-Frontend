@@ -22,7 +22,7 @@ export default function StudentAttendance() {
           console.log(err)
         })
       },[])
-    const onButtonClick = (arrItem) => {
+    const onButtonClick = (arrItem , setLoading) => {
       const requestBody = {
         studentData : {
           studentId : Number(arrItem.studentId) 
@@ -30,12 +30,15 @@ export default function StudentAttendance() {
         courseId : Number(courseId) , 
         token : contextData.token
       } 
+      setLoading(true)
       axios.post(`${BACKEND_URL}/api/attendance/markAttendance` ,requestBody)
       .then(res=>{
         console.log(res)
+        setLoading(false)
         alert("Student Marked Present For Today.")
       })
       .catch(err=>{
+        setLoading(false)
         console.log(err)
       })
     }

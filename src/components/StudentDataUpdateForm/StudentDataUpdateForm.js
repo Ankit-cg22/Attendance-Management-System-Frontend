@@ -13,8 +13,10 @@ import FormLabel from '@mui/material/FormLabel';
 import axios from 'axios';
 import { AppContext } from '../../AppContext';
 import { BACKEND_URL } from '../../Utils/Costansts';
+import { CircularProgress } from '@mui/material';
 
 function StudentDataUpdateForm() {
+  const [loading , setLoading] = useState(false)
   const {contextData , setContextData} = useContext(AppContext)
   const [formData, setFormData] = useState({
     firstName: "Ankit",
@@ -47,17 +49,21 @@ function StudentDataUpdateForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if(!formData.password){
-      alert("Enter old password ,or new password if you want to change password.")
+      alert("If you want to change password then enter the new passoword else enter old password .")
       return;
     }
+
     const body = {...formData , token : contextData.token}
-    console.log(body)
+    setLoading(true)
     axios.post(`${BACKEND_URL}/api/user/update/${contextData.user.userId}` , body)
     .then(res => {
       console.log(res)
+      setLoading(false)
+      alert("Student data updated successfully.")
     })
     .catch(err => {
       console.log(err)
+      setLoading(false)
     })
   };
   return (
@@ -107,7 +113,7 @@ function StudentDataUpdateForm() {
             color="primary"
             fullWidth
           >
-            Update
+            {loading ? <CircularProgress style={{color : "white" , margin:"2.25px 47.5px"}} size={20}/> : "Update"}
           </Button>
         </form>
       </Container>

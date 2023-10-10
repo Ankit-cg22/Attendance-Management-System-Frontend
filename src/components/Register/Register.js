@@ -14,9 +14,11 @@ import { BACKEND_URL } from '../../Utils/Costansts';
 import axios from 'axios';
 import { AppContext } from '../../AppContext';
 import { useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 
 function Register() {
   const navigate =useNavigate();
+  const[loading , setLoading] = useState(false);
   const {contextData , setContextData} = useContext(AppContext)
   const [formData, setFormData] = useState({
     firstName: '',
@@ -43,15 +45,18 @@ function Register() {
       setFormData({...formData , childId : Number(formData.childId)})
     }
     console.log(formData)
+    setLoading(true)
     axios.post( `${BACKEND_URL}/api/user/register` , formData)
     .then(res => {
       console.log(res.data)
       setContextData(res.data)
       if(res.data.user.role === "student") navigate("/student/report")
       if(res.data.user.role === "parent")navigate("/parent/report")
+      setLoading(false)
     })
     .catch(e => {
       console.log(e)
+      setLoading(false)
     })
 
   };
@@ -137,7 +142,7 @@ function Register() {
             color="primary"
             fullWidth
           >
-            Register
+            {loading ? <CircularProgress style={{ color: 'white' , margin:"2.25px 47.5px"}} size={20} /> :"Register"}
           </Button>
         </form>
       </Container>

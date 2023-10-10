@@ -7,10 +7,12 @@ import axios from 'axios';
 import { BACKEND_URL } from '../../Utils/Costansts';
 import { AppContext } from '../../AppContext';
 import { useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 
 function Login() {
   const navigate = useNavigate()
   const {contextData , setContextData} = useContext(AppContext)
+  const[loading , setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,6 +29,7 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
+    setLoading(true)
     axios.post( `${BACKEND_URL}/api/user/login` , formData)
     .then(res => {
       setContextData(res.data)
@@ -34,9 +37,11 @@ function Login() {
       if(res.data.user.role === "student") navigate("/student/report")
       if(res.data.user.role === "parent") navigate("/parent/report")
       if(res.data.user.role === "admin")navigate("/admin/markAttendance")
+      setLoading(false)
     })
     .catch(e => {
       console.log(e)
+      setLoading(false)
     })
   };
 
@@ -72,7 +77,7 @@ function Login() {
             color="primary"
             fullWidth
           >
-            Login
+            {loading ? <CircularProgress style={{ color: 'white' , margin:"2.25px 47.5px"}} size={20} /> :"Login"}
           </Button>
         </form>
       </Container>

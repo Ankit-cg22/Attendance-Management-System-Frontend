@@ -7,17 +7,20 @@ import axios from 'axios'
 export default function AddAdmin() {
     const {contextData , setContextData} = useContext(AppContext)
     const [data , setData] = useState([])
-    const onButtonClick = (item) => {
+    const onButtonClick = (item , setLoading) => {
         try {
+          setLoading(true)
           axios.post(`${BACKEND_URL}/api/admin/makeAdmin/${item.userId}` , {token : contextData.token})
           .then(res=>{
             console.log(res)
             const newData = data.filter((dataItem) => dataItem.userId !== item.userId);
             setData(newData);
             alert("Successfully made admin.")
+            setLoading(false)
           })
           .catch(err=>{
             console.log(err)
+            setLoading(false)
           })
         } catch (error) {
           console.log(error)

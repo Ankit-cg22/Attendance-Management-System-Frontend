@@ -21,21 +21,24 @@ export default function StudentEviction() {
           console.log(err)
         })
       },[])
-    const onButtonClick = (arrItem) => {
+    const onButtonClick = (arrItem , setLoading) => {
       const requestBody = {
         studentId : Number(arrItem.studentId) , 
         courseId : Number(courseId) , 
         token : contextData.token
       } 
+      setLoading(true)
       axios.post(`${BACKEND_URL}/api/enrollment/evictStudent` ,requestBody)
       .then(res=>{
         console.log(res)
         alert("Student successfully evicted.")
         const newData = data.filter(item => item.studentId !== arrItem.studentId)
         setData(newData)
+        setLoading(false)
       })
       .catch(err=>{
         console.log(err)
+        setLoading(false)
       })
     }
     const StudentComponent = ({arrItem}) => {

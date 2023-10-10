@@ -6,13 +6,14 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import { BACKEND_URL } from '../../Utils/Costansts';
 import { AppContext } from '../../AppContext';
+import { CircularProgress } from '@mui/material';
 
 function CourseAddForm() {
   const {contextData} = useContext(AppContext)
   const [formData, setFormData] = useState({
     courseTitle : ""
   });
-
+  const [loading , setLoading] =  useState(false)
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -23,14 +24,17 @@ function CourseAddForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true)
     axios.post(`${BACKEND_URL}/api/course/create` , {...formData , token: contextData.token})
     .then(res=>{
       console.log(res)
       alert('Course Created Successfully')
       setFormData({courseTitle:""})
+      setLoading(false)
     })
     .catch(err=>{
       console.log(err)
+      setLoading(false)
     })
   };
 
@@ -58,7 +62,7 @@ function CourseAddForm() {
             color="primary"
             fullWidth
           >
-            Create Course
+            {loading ? <CircularProgress style={{color : "white" , margin:"2.25px 47.5px"}} size={20}/> : "Create Course"}
           </Button>
         </form>
       </Container>

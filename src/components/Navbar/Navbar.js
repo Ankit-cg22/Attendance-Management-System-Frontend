@@ -20,12 +20,12 @@ export default function Navbar() {
           {contextData.user ?
           <>
             <Typography>{contextData.user.firstName} {contextData.user.lastName}</Typography>
-            <Button component={Link} to="/login" style={{color : "white"}} onClick={() => setContextData({})} >Logout</Button>
+            <Button component={Link} to="/login" color="primary" style={{ marginLeft:"10px" ,backgroundColor:"white"}} onClick={() => setContextData({})} >Logout</Button>
           </> 
           :
           <>
-            <Button component={Link} to="/register" style={{color : "white"}} >Register</Button>
-            <Button component={Link} to="/login" color="inherit">Login</Button>
+            <Button component={Link} to="/register" color="primary" style={{ marginLeft:"10px" ,backgroundColor:"white"}}  >Register</Button>
+            <Button component={Link} to="/login" color="primary" style={{ marginLeft:"10px" ,backgroundColor:"white"}} >Login</Button>
           </>  
           }
           
