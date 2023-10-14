@@ -45,7 +45,7 @@ export default function AttendanceReport() {
                 <TableCell>{row.courseId}</TableCell>
                 <TableCell>{row.courseTitle}</TableCell>
                 <TableCell>{row.attendanceCount}</TableCell>
-                <TableCell>{(row.attendanceCount/10) >= 0.2  ? '✔' : '⚠'}</TableCell>
+                <TableCell>{(row.attendanceCount/30) >= 0.5  ? '✔' : '⚠'}</TableCell>
               </TableRow>
             ))}
           </TableBody>

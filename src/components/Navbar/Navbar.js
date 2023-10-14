@@ -14,7 +14,7 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography component={Link} to="/" variant="h6"  sx={{ color:"white" , textDecoration:"none", flexGrow: 1 }}>
             Attendance Management App 
           </Typography>
           {contextData.user ?

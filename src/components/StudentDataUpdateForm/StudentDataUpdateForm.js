@@ -64,6 +64,7 @@ function StudentDataUpdateForm() {
     .catch(err => {
       console.log(err)
       setLoading(false)
+      alert(err.response?.data.error)
     })
   };
   return (

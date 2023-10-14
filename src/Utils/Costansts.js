@@ -6,3 +6,5 @@ export const AXIOS_CONFIG = {
         "Access-Control-Allow-Credentials": true,
     }
 };
+
+export const USER_DATA_LOCAL_STORAGE_KEY = "AttendanceManagementUserData";

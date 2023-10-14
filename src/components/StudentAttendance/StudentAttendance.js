@@ -39,7 +39,7 @@ export default function StudentAttendance() {
       })
       .catch(err=>{
         setLoading(false)
-        console.log(err)
+        alert(err.response.data.error)
       })
     }
     const StudentComponent = ({arrItem}) => {

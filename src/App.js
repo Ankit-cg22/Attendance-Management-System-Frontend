@@ -4,7 +4,6 @@ import Navbar from './components/Navbar/Navbar';
 import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
-import Demo from './components/Demo/Demo';
 import Sidebar from './components/Sidebar/Sidebar';
 import AttendanceReport from './components/AttendanceReport/AttendanceReport';
 import StudentDataUpdateForm from './components/StudentDataUpdateForm/StudentDataUpdateForm';
@@ -18,6 +17,13 @@ import StudentEnrollment from './components/StudentEnrollment/StudentEnrollment'
 import EvictStudent from './components/EvictStudent/EvictStudent';
 import StudentEviction from './components/StudentEviction/StudentEviction';
 import { AppContextProvider } from './AppContext';
+import EnrollmentCount from './components/Statistics/EnrollmentCount';
+import StudentWiseAttendanceCount from './components/Statistics/StudentWiseAttendanceCount';
+import CourseWiseAttendaceCount from './components/Statistics/CourseWiseAttendance';
+import CourseWiseStudentAttendanceInAMonth from './components/Statistics/CourseWiseStudentAttendanceInAMonth';
+import AttendanceDaysHighlight from './components/AttendanceDaysHighlight/AttendanceDaysHighlight';
+import Home from './components/Home/Home';
+import PastDayAttendance from './components/PastDayAttendance/PastDayAttendance';
 function App() {
   return (
     <div>
@@ -25,11 +31,15 @@ function App() {
         <Router>
           <Navbar/>
           <Routes >
+            <Route exact path="/" Component={Home}/>
             <Route exact path="/register" Component={Register} />
             <Route exact path="/login" Component={Login}/>
-            <Route exact path="/demo" Component={Demo}/>
             <Route exact path="/student/report" element={
                 <Sidebar ChildComponent={AttendanceReport}/>
+            }
+            />
+            <Route exact path="/student/attendanceHeatMap" element={
+                <Sidebar ChildComponent={AttendanceDaysHighlight}/>
             }
             />
             <Route exact path="/student/updateData" element={
@@ -65,6 +75,22 @@ function App() {
             <Route  path="/admin/evictStudent/course/:courseId/:courseTitle" element={
                 <Sidebar ChildComponent={StudentEviction}/>
             }/>
+            <Route  path="/admin/statistics/enrollment" element={
+                <Sidebar ChildComponent={EnrollmentCount} update={true} />
+            }/>
+            <Route  path="/admin/statistics/student" element={
+                <Sidebar ChildComponent={StudentWiseAttendanceCount}/>
+            }/>
+            <Route  path="/admin/statistics/course" element={
+                <Sidebar ChildComponent={CourseWiseAttendaceCount}/>
+            }/>
+            <Route  path="/admin/statistics/student-course" element={
+                <Sidebar ChildComponent={CourseWiseStudentAttendanceInAMonth}/>
+            }/>
+            <Route  path="/admin/attendanceCorrection" element={
+                <Sidebar ChildComponent={PastDayAttendance}/>
+            }/>
+
             {/* <Route exact path="" Component={}/> */}
             {/* <Route exact path="" Component={}/> */}
           </Routes>

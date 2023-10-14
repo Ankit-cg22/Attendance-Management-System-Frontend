@@ -13,12 +13,12 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Navbar from '../Navbar/Navbar';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../AppContext';
 
 const drawerWidth = 240;
 
-export default function Sidebar({ChildComponent}) {
+export default function Sidebar({ChildComponent, update=false}) {
     const navigate = useNavigate();
     const {sideBarOptions , contextData} = useContext(AppContext)
     const [list , setList] = useState([])
@@ -27,9 +27,14 @@ export default function Sidebar({ChildComponent}) {
         setSelectedIndex(index);
         navigate(link)
     }
+    const location = useLocation();
     useEffect(()=>{
-      if(contextData.user)setList(sideBarOptions[contextData.user.role])
-    } , [])
+      if(contextData.user)
+      {
+        if(contextData.user.role==="admin" && location.pathname.includes("/admin/statistics")) setList(sideBarOptions["statistics"])
+        else setList(sideBarOptions[contextData.user.role])
+      }
+    } , [update])
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -58,7 +63,7 @@ export default function Sidebar({ChildComponent}) {
             <ListItem key={item.text} disablePadding>
               <ListItemButton selected={selectedIndex === index} onClick={e => handleOptionClick(index , item.link)}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {item.icon}
                 </ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
