@@ -49,9 +49,15 @@ function Register() {
     axios.post( `${BACKEND_URL}/api/user/register` , formData)
     .then(res => {
       console.log(res.data)
+      if(res.data.user.role === "admin-request"){
+        alert("Your admin request has been sent.")
+        navigate("/")
+        return
+      }
       setContextData(res.data)
       if(res.data.user.role === "student") navigate("/student/report")
       if(res.data.user.role === "parent")navigate("/parent/report")
+      
       setLoading(false)
     })
     .catch(e => {

@@ -32,11 +32,17 @@ function Login() {
     setLoading(true)
     axios.post( `${BACKEND_URL}/api/user/login` , formData)
     .then(res => {
+      if(res.data.user.role === "admin-request"){
+        alert("Your admin request is pending.")
+        navigate("/")
+        return
+      }
       setContextData(res.data)
       console.log(res.data);
       if(res.data.user.role === "student") navigate("/student/report")
       if(res.data.user.role === "parent") navigate("/parent/report")
       if(res.data.user.role === "admin")navigate("/admin/markAttendance")
+      
       setLoading(false)
     })
     .catch(e => {

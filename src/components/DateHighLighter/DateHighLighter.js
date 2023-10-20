@@ -39,7 +39,7 @@ function DateHighlighter({ highlightedDates }) {
   };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <StaticDatePicker
+          <DateCalendar 
             defaultValue={today}
             
             slots={{

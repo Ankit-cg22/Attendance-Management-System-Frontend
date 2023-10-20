@@ -1,15 +1,17 @@
-import React , {useState , useContext} from 'react'
+import React , {useState , useContext, useEffect} from 'react'
 import { AppContext } from '../../AppContext';
 import axios from 'axios';
 import { BACKEND_URL } from '../../Utils/Costansts';
 import { Button, CircularProgress, Container, TextField, Typography } from '@mui/material';
 import DateHighlighter from '../DateHighLighter/DateHighLighter';
+import CourseSelectionDropDown from '../CourseSelectionDropDown/CourseSelectionDropDown';
 
 export default function AttendanceDaysHighlight() {
     const {contextData} = useContext(AppContext)
     const [formData, setFormData] = useState({
       courseId : ""
     });
+    const [courseData, setCourseData] = useState([]);
     const [loading , setLoading] =  useState(false)
     const handleChange = (event) => {
       const { name, value } = event.target;
@@ -33,6 +35,17 @@ export default function AttendanceDaysHighlight() {
         setLoading(false)
       })
     };
+
+    useEffect(()=>{
+      axios.get(`${BACKEND_URL}/api/student/enrolledCourses/${contextData.studentId}`)
+      .then(res => {
+        setCourseData(res.data.data)  
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    } ,[])
+
     const [attendanceDates , setAttendanceDates] = useState([])
     return (
       <div>
@@ -41,15 +54,7 @@ export default function AttendanceDaysHighlight() {
           <Typography variant="h6" align="center">Fetch attendance heatmap for any course</Typography>
           <form onSubmit={handleSubmit}>
             
-            <TextField
-              fullWidth
-              label="Course Id"
-              name="courseId"
-              type="text"
-              value={formData.courseId}
-              onChange={handleChange}
-              margin="normal"
-            />
+            <CourseSelectionDropDown formData={formData} handleChange={handleChange} courses={courseData}/>
             
             
             <Button

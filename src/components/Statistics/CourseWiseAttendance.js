@@ -8,7 +8,7 @@ import axios from 'axios';
 import CourseSelectionDropDown from '../CourseSelectionDropDown/CourseSelectionDropDown';
 
 export default function CourseWiseAttendaceCount() {
-    const months = ['JAN' , 'FEB' , 'MAR' ,'APR' , 'MAY' , 'JUN', 'JUL' , 'AUG' , 'SEP', 'NOV' , 'DEC' ]
+    const months = ['JAN' , 'FEB' , 'MAR' ,'APR' , 'MAY' , 'JUN', 'JUL' , 'AUG' , 'SEP', 'OCT','NOV' , 'DEC' ]
     const {contextData} = useContext(AppContext);
     const handleSubmit = (e) => {
       e.preventDefault();

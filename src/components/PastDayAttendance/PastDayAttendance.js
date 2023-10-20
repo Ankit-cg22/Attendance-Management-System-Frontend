@@ -1,4 +1,4 @@
-import React, { useState , useContext } from 'react';
+import React, { useState , useContext, useEffect } from 'react';
 import { TextField, Button, Grid, Container, CircularProgress } from '@mui/material';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -9,11 +9,11 @@ import {
 import { BACKEND_URL } from '../../Utils/Costansts';
 import axios from 'axios';
 import { AppContext } from '../../AppContext';
+import CourseSelectionDropDown from '../CourseSelectionDropDown/CourseSelectionDropDown';
 
 export default function PastDayAttendance() {
   const {contextData} = useContext(AppContext);
   const [studentId, setStudentId] = useState('');
-  const [courseId, setCourseId] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [date ,setDate] = useState("")  
   const formatDate = (date)=>{
@@ -31,7 +31,7 @@ export default function PastDayAttendance() {
   const [loading , setLoading] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formBody = {   studentData : {studentId} , courseId , date   , token :contextData.token}
+    const formBody = {   studentData : {studentId} , courseId :formData.courseId , date   , token :contextData.token}
     console.log(formBody)
     setLoading(true)
     axios.post(`${BACKEND_URL}/api/attendance/markAttendance` , formBody)
@@ -46,6 +46,27 @@ export default function PastDayAttendance() {
         setLoading(false)
     })
   };
+  const [courseData , setCourseData] = useState([])
+
+  useEffect(()=>{
+    axios.get(`${BACKEND_URL}/api/course/allCourses`)
+    .then(res=>{
+      setCourseData(res.data.data)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  },[])
+  const [formData, setFormData] = useState({
+    courseId:"" ,
+  });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: Number(value),
+    }));
+  };
   return (
     <div>
       <Container maxWidth="sm" style={{ marginTop: '20px' }}>
@@ -58,14 +79,8 @@ export default function PastDayAttendance() {
               onChange={(e) => setStudentId(Number(e.target.value))}
               margin="normal"
             />
-            <TextField
-              label="Course ID"
-              variant="outlined"
-              fullWidth
-              value={courseId}
-              onChange={(e) => setCourseId(Number(e.target.value))}
-              margin="normal"
-            />
+            <CourseSelectionDropDown courses={courseData} formData={formData} handleChange={handleChange}/>
+
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DatePicker
                 label="Select a Date"
